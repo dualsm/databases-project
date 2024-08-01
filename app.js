@@ -8,7 +8,7 @@
 // setting up port to use, express instance created
 var express = require('express');
 var app = express();
-let PORT = 44080
+let PORT = 44082
 
 // database
 var db = require('./database/db-connector')
@@ -39,6 +39,10 @@ app.get('/jobs', (req,res) => {
 
 app.get('/salaries', (req,res) => {
     res.render('salaries'); // render guarantees engine will render webpage before sending HTML to client
+});
+
+app.get('/employeestojobs', (req,res) => {
+    res.render('employeestojobs'); // render guarantees engine will render webpage before sending HTML to client
 });
 
 // listener for debugging

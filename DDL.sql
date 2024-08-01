@@ -44,7 +44,7 @@ CREATE TABLE Salaries(
     salary_id int AUTO_INCREMENT NOT NULL UNIQUE,
     job_id int NOT NULL,
     annual_pay int NOT NULL,
-    bonus int NOT NULL,
+    bonus int ,
     PRIMARY KEY (salary_id),
     FOREIGN KEY (job_id) REFERENCES Jobs(job_id)
 );

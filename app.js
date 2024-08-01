@@ -22,7 +22,10 @@ app.set('view engine', '.hbs'); // use handlebars engine when encounters the .hb
 
 // ROUTES
 app.get('/', (req,res) => {
-    res.render('index'); // render guarantees engine will render webpage before sending HTML to client
+    let query1 = "SELECT * FROM Employees;";
+     db.pool.query(query1, function(error, rows, fields){
+        res.render('index', {data:rows});
+     }) // render guarantees engine will render webpage before sending HTML to client
 });
 
 app.get('/employees', (req,res) => {

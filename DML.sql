@@ -4,9 +4,18 @@
 -- SELECT statements ==================================================
 -- Select all departments
 SELECT * FROM Departments;
+--Select all deppartment names for drop down 
+SELECT dep_name, dep_id from Departments;
 
 -- Select all employees
 SELECT * FROM Employees;
+
+-- Get all job IDs and job titles for a specific employee by their name
+SELECT ej.job_id, j.job_title
+FROM Employees e
+INNER JOIN Employees_to_Jobs ej ON e.emp_id = ej.emp_id
+INNER JOIN Jobs j ON ej.job_id = j.job_id
+WHERE e.emp_name = :inputEmployeeName;
 
 -- Select all jobs
 SELECT * FROM Jobs;

@@ -1,0 +1,98 @@
+<!-- employeestojobs.hbs -->
+<h1> Assigning Jobs </h1>
+
+<!-- employees_to_jobs table -->
+<table border="1" cellpadding="5">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Job Title</th>
+        <th>Employee ID</th>
+        <th>Job ID</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+    </tr>
+    <tr> 
+        <td>Jack Garcia</td>
+        <td>Alice Johnson</td>
+        <td>Carol White</td>
+    </tr>
+
+    <tr> 
+        <td>2</td>
+        <td>2</td>
+        <td>2</td>
+    </tr>
+    <tr> 
+        <td>10</td>
+        <td>10</td>
+        <td>6</td>
+    </tr>
+</table>
+
+
+<h2> Assign a Job </h2>
+<form action="/addRelation" method="POST">
+    <fieldset class="fields" style="width:50%">
+        <label> Employee ID</label> 
+        <select id="employeeIdInput" name="employeeIdInput" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="10">10</option>
+        </select>
+        <br />
+        <label> Job ID</label> 
+        <select id="jobIdInput" name="jobIdInput" required>
+            <option value="1">2</option>
+            <option value="2">3</option>
+            <option value="10">4</option>
+        </select>
+        <br />
+    </fieldset>
+    <input class="btn" type="submit" id="addAssignment" value="Add Assignment">
+    <input class="btn" type="button" value="Cancel">
+</form> 
+
+<h2> Remove Assignments </h2>
+<form action="/removeRelation" method="POST">
+    <fieldset class="fields" style="width:50%">
+        <label> ID Selection </label> 
+        <select id="emp_to_job_idInput" name="emp_to_job_idInput" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="10">10</option>
+        </select>
+    </fieldset>
+    <input class="btn" type="submit" value="Remove Assignment">
+</form>
+
+<h2> Edit Assignments </h2>
+<form action="/editrelation" method="POST">
+    <fieldset class="fields" style="width:50%">
+        <label> ID Selection </label> 
+        <select id="emp_to_job_idInput" name="emp_to_job_idInput" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="10">10</option>
+        </select>
+        <br />
+        <br />
+        <label> Employee ID</label> 
+        <select id="employeeIdInput" name="employeeIdInput" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="10">10</option>
+        </select>
+        <br />
+        <label> Job ID</label> 
+        <select id="jobIdInput" name="jobIdInput" required>
+            <option value="1">2</option>
+            <option value="2">3</option>
+            <option value="10">4</option>
+        </select>
+    </fieldset>
+    <input class="btn" type="submit" value="Edit Assignment">
+</form>

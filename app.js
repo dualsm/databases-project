@@ -8,7 +8,7 @@
 // setting up port to use, express instance created
 var express = require('express');
 var app = express();
-let PORT = 44080
+let PORT = 44082
 
 // database
 var db = require('./database/db-connector')
@@ -22,7 +22,10 @@ app.set('view engine', '.hbs'); // use handlebars engine when encounters the .hb
 
 // ROUTES
 app.get('/', (req,res) => {
-    res.render('index'); // render guarantees engine will render webpage before sending HTML to client
+    let query1 = "SELECT * FROM Employees;";
+     db.pool.query(query1, function(error, rows, fields){
+        res.render('index', {data:rows});
+     }) // render guarantees engine will render webpage before sending HTML to client
 });
 
 app.get('/employees', (req,res) => {
@@ -39,6 +42,10 @@ app.get('/jobs', (req,res) => {
 
 app.get('/salaries', (req,res) => {
     res.render('salaries'); // render guarantees engine will render webpage before sending HTML to client
+});
+
+app.get('/employeestojobs', (req,res) => {
+    res.render('employeestojobs'); // render guarantees engine will render webpage before sending HTML to client
 });
 
 // listener for debugging

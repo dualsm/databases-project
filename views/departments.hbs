@@ -1,0 +1,69 @@
+<!-- departments.hbs -->
+<h1> Departments </h1>
+
+<!-- departments table -->
+<table border="1" cellpadding="5">
+    <tr>
+        <th>id</th>
+        <th>Department Name</th>
+        <th>Number of Employees</th>
+    </tr>
+
+    <tr>
+        <td>1</td>
+        <td>Management</td>
+        <td>3</td>
+    </tr>
+    <tr> 
+        <td>2</td>
+        <td>Front-of-house</td>
+        <td>8</td>
+    </tr>
+    <tr> 
+        <td>3</td>
+        <td>Back-of-house</td>
+        <td>7</td>
+    </tr>
+</table>
+
+
+<h2> Add Department </h2>
+<form action="/addDepartment" method="POST">
+    <fieldset class="fields" style="width:50%">
+        <label> Department Name </label> 
+        <input type="text" name="dep_name" required>
+        <br />
+    </fieldset>
+    <input class="btn" type="submit" id="addDepartment" value="Add Department">
+    <input class="btn" type="button" value="Cancel">
+</form> 
+
+<h2> Remove Department </h2>
+<form action="/removeDepartment" method="POST">
+    <fieldset class="fields" style="width:50%">
+        <label> Department Selection </label> 
+        <select id="departmentInput" name="departmentInput" required>
+            <option value="1">1 - Management</option>
+            <option value="2">2 - Front-of-house</option>
+            <option value="3">3 - Back-of-house</option>
+        </select>
+    </fieldset>
+    <input class="btn" type="submit" value="Remove Department">
+</form>
+
+<h2> Edit Department </h2>
+<form action="/editDepartment" method="POST">
+    <fieldset class="fields" style="width:50%">
+        <label> Department Selection </label> 
+         <select id="departmentInput" name="departmentInput" required>
+            <option value="1">1 - Management</option>
+            <option value="2">2 - Front-of-house</option>
+            <option value="3">3 - Back-of-house</option>
+        </select>
+        <br />
+        <br />
+        <label> New Department Name</label> 
+        <input type="text" name="dep_name" required>
+    </fieldset>
+    <input class="btn" type="submit" value="Edit Department">
+</form>

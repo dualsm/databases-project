@@ -1,0 +1,73 @@
+<!-- jobs.hbs -->
+<h1> Jobs </h1>
+<!-- jobs table -->
+<table border="1" cellpadding="5">
+    <tr>
+        <th>id</th>
+        <th>Job Title</th>
+        <th>Department</th>
+    </tr>
+
+    <tr>
+        <td>1</td>
+        <td>General Manager</td>
+        <td>1</td>
+    </tr>
+    <tr> 
+        <td>6</td>
+        <td>Head Chef</td>
+        <td>3</td>
+    </tr>
+    <tr> 
+        <td>3</td>
+        <td>Server</td>
+        <td>2</td>
+    </tr>
+</table>
+
+
+<h2> Add a job </h2>
+<form action="/addJob" method="POST">
+    <fieldset class="fields" style="width:50%">
+        <label> Job Title </label> <input type="text" name="jobTitleInput">
+        <br />
+        <label> Department </label> 
+        <select id="depNameInput" name="depNameInput" required>
+            <option value="1">1 - Management</option>
+            <option value="2">2 - Back-of-house</option>
+            <option value="3">3 - Front-of-house</option>
+        </select>
+    </fieldset>
+    <input class="btn" type="submit" id="addJob" value="Add Job">
+    <input class="btn" type="button" value="Cancel">
+</form> 
+
+
+<h2> Remove a Job </h2>
+<form action="/removeJob" method="POST">
+    <fieldset class="fields" style="width:50%">
+        <label> Job Title </label> 
+        <select id="jobTitleInput" name="jobTitleInput" required>
+            <option value="General Manager">General Manager</option>
+            <option value="Head Chef">Head Chef</option>
+            <option value="Server">Server</option>
+        </select>
+    </fieldset>
+    <input class="btn" type="submit" value="Remove Job">
+</form>
+
+<h2> Edit a Job </h2>
+<form action="/editJob" method="POST">
+    <fieldset class="fields" style="width:50%">
+        <label> Current Job Title </label> 
+        <select id="currentJobTitleInput" name="currentJobTitleInput" required>
+            <option value="General Manager">General Manager</option>
+            <option value="Head Chef">Head Chef</option>
+            <option value="Server">Server</option>
+        </select>
+        <br />
+        <label> New Job Title </label> 
+        <input type="text" id="newJobTitleInput" name="newJobTitleInput" required>
+    </fieldset>
+    <input class="btn" type="submit" value="Edit Job">
+</form>

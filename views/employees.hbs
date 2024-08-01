@@ -1,0 +1,80 @@
+<!-- employees.hbs -->
+<h1> Employees </h1>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>id</th>
+        <th>Employee Name</th>
+        <th>Hire date</th>
+    </tr>
+
+    <tr>
+        <td>10</td>
+        <td>Jack Garcia</td>
+        <td>2022-03-17</td>
+    </tr>
+    <tr> 
+        <td>1</td>
+        <td>Alice Johnson</td>
+        <td>2020-01-15</td>
+    </tr>
+    <tr> 
+        <td>3</td>
+        <td>Carol White</td>
+        <td>2021-04-23</td>
+    </tr>
+</table>
+
+<h2> Add an Employee </h2>
+<form action="/addEmployee" method="POST">
+    <fieldset class="fields" style="width:50%">
+
+        <label> Employee Name </label> 
+        <input type="text" name="emp_name" required>
+        <br />
+        <label> Hire Date </label>
+        <input type="date" name="hire_date" required>
+
+    </fieldset>
+    <input class="btn" type="submit" id="addEmployee" value="Add Employee">
+    <input class="btn" type="button" value="Cancel">
+</form> 
+
+<h2> Remove an Employee</h2>
+<form action="/removeEmployee" method="POST">
+    <fieldset class="fields" style="width:50%">
+        <label> Employee Name </label> 
+        <select id="jobIdSelection" name="jobIdSelection" required>
+            <option value="10">Jack Garcia</option>
+            <option value="1">Alice Johnson</option>
+            <option value="3">Carol White</option>
+        </select>
+    </fieldset>
+    <input class="btn" type="submit" value="Remove Employee">
+</form>
+
+<h2> Edit </h2>
+<form action="/editEmployee" method="POST">
+    <fieldset class="fields" style="width:50%">
+        <label> Employee ID </label> 
+        <select id="jobIdSelection" name="jobIdSelection" required>
+            <option value="10">10</option>
+            <option value="1">1</option>
+            <option value="3">3</option>
+        </select>
+        <br />
+        <label> Employee Name </label> 
+        <input type="text" name="emp_name" required>
+        <br />
+        <label> Department ID </label>
+        <select id="depNameInput" name="depNameInput" required>
+            <option value="1">1 - Management</option>
+            <option value="2">2 - Back-of-house</option>
+            <option value="3">3 - Front-of-house</option>
+        </select>
+        <br />
+        <label> Hire Date </label> 
+        <input type="date" name="hire_date" required>
+    </fieldset>
+    <input class="btn" type="submit" value="Edit Salary">
+</form>

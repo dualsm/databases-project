@@ -36,8 +36,8 @@ INSERT INTO Jobs (job_title, dep_id)
 VALUES (:jobTitleInput, (SELECT dep_id FROM Departments WHERE dep_name = :depNameInput));
 
 -- Query to add a new employee
-INSERT INTO Employees (emp_name, hire_date, dep_id)
-VALUES (:empNameInput, :hireDateInput, (SELECT dep_id FROM Departments WHERE dep_name = :depNameInput));
+INSERT INTO Employees (emp_name, hire_date)
+VALUES (:empNameInput, :hireDateInput);
 
 -- Query to assign a job to an employee
 INSERT INTO Employees_to_Jobs (emp_id, job_id)

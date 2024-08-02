@@ -1,44 +1,85 @@
 <!-- employees.hbs -->
 <h1> Employees </h1>
 
-<table border="1" cellpadding="5">
-    <tr>
-        <th>id</th>
-        <th>Employee Name</th>
-        <th>Hire date</th>
-    </tr>
+{{!-- create the table --}}
+<table id="employees-table" >
+    <caption> Employees Table </caption>
+    <thead>
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th>delete</th>
+        </tr>
+    </thead>
 
-    <tr>
-        <td>10</td>
-        <td>Jack Garcia</td>
-        <td>2022-03-17</td>
-    </tr>
-    <tr> 
-        <td>1</td>
-        <td>Alice Johnson</td>
-        <td>2020-01-15</td>
-    </tr>
-    <tr> 
-        <td>3</td>
-        <td>Carol White</td>
-        <td>2021-04-23</td>
-    </tr>
+    <tbody>
+        {{#each data}}
+        <tr>
+            <td>{{this.emp_id}}</td>
+            <td>{{this.emp_name}}</td>
+            <td>{{this.hire_date}}</td>
+            <td><button onclick="deleteEmployee({{this.emp_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
 </table>
+<script src="./js/deleteEmployee.js"></script>
+
+<!-- UNDER CONSTRUCTION -->
+{{!-- <h2>Search For Employee</h2>
+<form id="search-person-html" method='GET' action='/employees'>
+    <label for="input-name">Search by name: </label>
+    <input type="text" name="name" id="input-name-html-search">
+    
+    <input type="submit">
+    <a href='/employees'><button>Reset</button></a>
+</form> --}}
+
 
 <h2> Add an Employee </h2>
-<form action="/addEmployee" method="POST">
-    <fieldset class="fields" style="width:50%">
+<p>To add a new employee, fill out the fields and click "Submit"</p>
+<form id="add-employee-form" action="/add-employee-form" method="POST">
+    <fieldset class="fields">
 
         <label> Employee Name </label> 
-        <input type="text" name="emp_name" required>
+        <input type="text" id="input_emp_name" name="input_emp_name" required>
         <br />
         <label> Hire Date </label>
-        <input type="date" name="hire_date" required>
-
+        <input type="date" id="input_hire_date" name="input_hire_date" required>
+        <br />
+        <input class="btn" type="submit" id="addEmployee" value="Add Employee">
+        <input class="btn" type="button" value="Cancel">
     </fieldset>
-    <input class="btn" type="submit" id="addEmployee" value="Add Employee">
-    <input class="btn" type="button" value="Cancel">
-</form> 
+    
+</form>
+
+
+<h2> Remove Employee</h2>
+<form id="remove-employee-form" action="/remove-employee-form" method="POST">
+    <fieldset class="fields">
+        <label> Select Employee </label> 
+        <select id="input-emp-id" name="input-emp-id" required>
+            {{#each data}}
+            <option value="{{this.emp_id}}">{{this.emp_name}}</option>
+            {{/each}}
+        </select>
+        <input class="btn" type="submit" value="Remove Employee">
+        <br />
+        <strong>Warning, this <u>will</u> delete the user from the database!!</strong>
+    
+    </fieldset>
+</form>
+
+<br /><br /><br /><br /><br />
+
+
+
+
+<!-- OLD -->
+{{!-- 
 
 <h2> Remove an Employee</h2>
 <form action="/removeEmployee" method="POST">
@@ -77,4 +118,4 @@
         <input type="date" name="hire_date" required>
     </fieldset>
     <input class="btn" type="submit" value="Edit Salary">
-</form>
+</form> --}}

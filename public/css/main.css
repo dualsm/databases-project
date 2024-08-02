@@ -1,0 +1,73 @@
+* {
+    font-family: Arial;
+}
+
+.fields {
+    width: 400px;
+    float: left;
+}
+
+.sidenav {
+    height: 100%;
+    width: 180px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #3b1802;
+    padding-top: 2%;
+    overflow-x: hidden;
+}
+
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 24px;
+    color: #DDF9C1;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+    transition: scale(1.5) 0.3s; 
+}
+
+form {
+    display: inline-block;
+}
+
+body {
+    margin-left: 180px;
+    padding: 0px 10px;
+    padding-bottom: 200px;
+    padding-left: 20px;
+}
+
+fieldset {
+    padding: 8px 8px;
+    width: auto;
+    line-height: 30px;
+    display: block;
+    margin: 10px;
+}
+
+th, td {
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #eee;
+}
+
+thead, th{
+    background-color: #F9A03F;
+}
+
+caption { 
+    font-weight: bold;
+    font-size: 20px;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+

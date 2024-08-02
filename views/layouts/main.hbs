@@ -5,20 +5,23 @@
 <head>
     <meta charset="utf-8">
     <title>Salmon Brioche</title>
-    <style type="test/css"> 
-    .fields { width: 400px; float: left;} 
-    </style>
-</head>
-<nav>
-    <a href="/"> Home </a> |
-    <a href="/departments">Departments</a> | 
-    <a href="/employees">Employees</a> | 
-    <a href="/salaries">Salaries</a> | 
-    <a href="/jobs">Jobs</a> |
-    <a href="/employeestojobs">Assign Employees</a>
-</nav>
-<body>
+    {{!-- load our css --}}
+    {{#each css}}
+        <link rel="stylesheet" href="/css/{{this}}.css">
+    {{/each}}
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
+    {{!-- <link rel="stylesheet" href="/public/css/main.css"> --}}
+</head>
+<div class="sidenav">
+    <a href="/">Home</a>
+    <a href="/departments">Departments</a> 
+    <a href="/employees">Employees</a> 
+    <a href="/salaries">Salaries</a> 
+    <a href="/jobs">Jobs</a>
+    <a href="/employeestojobs">Assign Employees</a>
+</div>
+<body>
     {{{body}}}
 
 </body>

@@ -1,6 +1,6 @@
 <!-- employees.hbs -->
 <h1> Employees </h1>
-
+<p>Note: Delete button works, but you must refresh the page to view the updated table.</p>
 {{!-- create the table --}}
 <table id="employees-table" >
     <caption> Employees Table </caption>
@@ -51,9 +51,7 @@
         <input type="date" id="input_hire_date" name="input_hire_date" required>
         <br />
         <input class="btn" type="submit" id="addEmployee" value="Add Employee">
-        <input class="btn" type="button" value="Cancel">
     </fieldset>
-    
 </form>
 
 
@@ -69,13 +67,32 @@
         <input class="btn" type="submit" value="Remove Employee">
         <br />
         <strong>Warning, this <u>will</u> delete the user from the database!!</strong>
-    
+        <p> Note: it doesn't actually work yet. Though the buttons on the table work! </p>
     </fieldset>
 </form>
 
-<br /><br /><br /><br /><br />
+<br />
 
-
+<h2>Updating An Employee's Name and/or Hiring Date </h2>
+<form id="update-employee-form-ajax" >
+    <fieldset class="fields">
+        <label for="input-emp-name">Employee name: </label>
+        <select id="input-emp-id" name="input-emp-id" required>
+            {{#each data}}
+            <option value="{{this.emp_id}}">{{this.emp_name}}</option>
+            {{/each}}
+        </select>
+        <br />
+        <label> Employee New Name </label> 
+        <input type="text" id="input-emp-name" name="input-emp-name">
+        <br />
+        <label for="input-date-hired">Hire date: </label>
+        <input type="date" id="input-hire-date" name="input-hire-date" required>
+        <br />
+        <input type="submit" value="Modify">
+    </fieldset>
+</form>
+<script src="./js/updateEmployee.js"></script>
 
 
 <!-- OLD -->

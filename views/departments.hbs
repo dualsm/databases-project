@@ -2,40 +2,38 @@
 <h1> Departments </h1>
 
 <!-- departments table -->
-<table border="1" cellpadding="5">
+<table id="departmentsTable">
+    <caption>Departments Table</caption>
+    <thead>
     <tr>
-        <th>id</th>
-        <th>Department Name</th>
-        <th>Number of Employees</th>
+        {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+        {{/each}}
+        <th>Delete</th>
     </tr>
-
-    <tr>
-        <td>1</td>
-        <td>Management</td>
-        <td>3</td>
-    </tr>
-    <tr> 
-        <td>2</td>
-        <td>Front-of-house</td>
-        <td>8</td>
-    </tr>
-    <tr> 
-        <td>3</td>
-        <td>Back-of-house</td>
-        <td>7</td>
-    </tr>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr>
+            <td>{{this.dep_id}}</td>
+            <td>{{this.dep_name}}</td>
+            <td>{{this.dep_num_employees}}</td>
+            <td><button onclick="deleteDepartment({{this.dep_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
 </table>
 
 
 <h2> Add Department </h2>
-<form action="/addDepartment" method="POST">
+<form id="add-department-form" action="/add-department-form" method="POST">
     <fieldset class="fields" style="width:50%">
         <label> Department Name </label> 
-        <input type="text" name="dep_name" required>
+        <input type="text" name="input_dep_name" required>
         <br />
-        
         <input class="btn" type="submit" id="addDepartment" value="Add Department">
-        <input class="btn" type="button" value="Cancel">
     </fieldset>
 </form> 
 

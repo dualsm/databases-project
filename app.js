@@ -14,6 +14,7 @@ let PORT = 44082
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 const path = require('path')
+
 app.use(express.static('public')) // so it can use the public directory to put CSS TO WEBPAGE
 // needed this source: https://expressjs.com/en/starter/static-files.html
 
@@ -26,18 +27,17 @@ var exphbs = require('express-handlebars'); // imports handlebars
 app.engine('.hbs', engine({extname: ".hbs"})); // create engine to recognize .hbs
 app.set('view engine', '.hbs'); // use handlebars engine when encounters the .hbs extension
 
-// load css for all pages (added as a local in each response)
-var css_arr = ['main', 'employees']
+
+// add each css file name to css_arr if you want the css loaded
+var css_arr = ['main', 'employees','departments']
 app.use((req, res, next) => {
-    
     res.locals.css = css_arr;
     next();
 });
 
+
 // ROUTES
 app.get('/', (req,res) => {
-    
-
     res.render('index'); // render guarantees engine will render webpage before sending HTML to client
 });
 
@@ -72,7 +72,7 @@ app.post('/add-employee-form', function(req,res){
     let emp_name = parseInt(data['input_emp_name']);
     if (isNaN(emp_name))
     {
-        homeworld = 'NULL'
+        emp_name = 'NULL'
     }
 
     // calendar selector already places in YYYY-MM-DD format
@@ -122,10 +122,79 @@ app.delete('/delete-employees-ajax/', function (req,res,next){
     })
 });
 
+app.put('/put-employee-ajax', function(req,res,next){
+    let data = req.body;
+    console.log(data.emp_id)
+    let emp_id = parseInt(data.emp_id);
 
+    let queryUpdateEmployee = `UPDATE Employees SET emp_name = '${data.emp_name}', hire_date = '${data.hire_date}' WHERE emp_id = ${emp_id};`;
+    let queryRefillTable = "SELECT emp_id, emp_name, DATE_FORMAT(hire_date, '%m/%d/%Y') AS hire_date FROM Employees;";
+  
+          // Run the 1st query
+          db.pool.query(queryUpdateEmployee, [data.emp_name, data.hire_date, emp_id], function(error, rows, fields){
+              if (error) {
+  
+              // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error);
+                res.sendStatus(400);
+              }
+  
+              // If there was no error, we run our second query and return that data so we can use it to update the people's
+              // table on the front-end
+              else
+              {
+                  // Run the second query
+                  db.pool.query(queryRefillTable, function(error, rows, fields) {
+  
+                      if (error) {
+                          console.log(error);
+                          res.sendStatus(400);
+                      } else {
+                          res.render('employees', rows);
+                      }
+                  })
+              }
+  })});
+
+
+// DEPARTMENTS
 
 app.get('/departments', (req,res) => {
-    res.render('departments'); 
+
+    let query1 = `SELECT dep_id, dep_name, dep_num_employees FROM Departments;`;
+
+    db.pool.query(query1, function(error, rows, fields){
+        console.log({data:rows});
+        res.render('departments', {data:rows});
+    });
+});
+
+app.post('/add-department-form', function(req,res){
+    let data = req.body;
+
+    // check for invalid data entry
+    // WILL RETURN TO SANITIZE
+    let dep_name = parseInt(data['input_dep_name']);
+    if (isNaN(dep_name))
+    {
+        dep_name = 'NULL'
+    }
+
+    // number of employees when adding a department will be 0. That value is incremented when an employee gets assigned a job
+    let query1 = `INSERT INTO Departments (dep_name, dep_num_employees) VALUES ('${data['input_dep_name']}', 0);`
+    db.pool.query(query1, function(error, rows, fields){
+
+       
+        if (error) {
+            console.log(error)
+            res.sendStatus(400);
+        }
+
+        else
+        {
+            res.redirect('/departments');
+        }
+    })
 });
 
 app.get('/jobs', (req,res) => {

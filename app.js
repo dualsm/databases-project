@@ -216,7 +216,19 @@ app.get('/salaries', (req,res) => {
 });
 
 app.get('/employeestojobs', (req,res) => {
-    res.render('employeestojobs'); 
+    let query1 = `SELECT ej.emp_to_job_id, 
+       e.emp_id, 
+       e.emp_name, 
+       j.job_id, 
+       j.job_title
+    FROM Employees_to_Jobs ej
+    JOIN Employees e ON ej.emp_id = e.emp_id
+    JOIN Jobs j ON ej.job_id = j.job_id; `;
+
+    db.pool.query(query1, function(error, rows, fields){
+        console.log({data:rows});
+        res.render('employeestojobs', {data:rows});
+    }); 
 });
 
 // listener for debugging

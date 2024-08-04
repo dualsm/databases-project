@@ -29,7 +29,7 @@ app.set('view engine', '.hbs'); // use handlebars engine when encounters the .hb
 
 
 // add each css file name to css_arr if you want the css loaded
-var css_arr = ['main', 'employees','departments']
+var css_arr = ['main', 'employees','departments', 'jobs', 'salaries']
 app.use((req, res, next) => {
     res.locals.css = css_arr;
     next();
@@ -161,7 +161,7 @@ app.put('/put-employee-ajax', function(req,res,next){
 
 app.get('/departments', (req,res) => {
 
-    let query1 = `SELECT dep_id, dep_name, dep_num_employees FROM Departments;`;
+    let query1 = `SELECT d.dep_id, d.dep_name, COUNT(ej.emp_id) AS actual_num_employees FROM Departments d LEFT JOIN Jobs j ON d.dep_id = j.dep_id LEFT JOIN Employees_to_Jobs ej ON j.job_id = ej.job_id GROUP BY d.dep_id, d.dep_name, d.dep_num_employees;`;
 
     db.pool.query(query1, function(error, rows, fields){
         console.log({data:rows});
@@ -198,11 +198,21 @@ app.post('/add-department-form', function(req,res){
 });
 
 app.get('/jobs', (req,res) => {
-    res.render('jobs'); 
+    let query1 = `SELECT job_id, job_title, dep_id FROM Jobs;`;
+
+    db.pool.query(query1, function(error, rows, fields){
+        console.log({data:rows});
+        res.render('jobs', {data:rows});
+    }); 
 });
 
 app.get('/salaries', (req,res) => {
-    res.render('salaries'); 
+    let query1 = `SELECT salary_id, job_id, annual_pay, bonus FROM Salaries;`;
+
+    db.pool.query(query1, function(error, rows, fields){
+        console.log({data:rows});
+        res.render('salaries', {data:rows});
+    }); 
 });
 
 app.get('/employeestojobs', (req,res) => {

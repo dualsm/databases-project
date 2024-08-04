@@ -9,15 +9,16 @@ updatePersonForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let input_emp_id = document.getElementById("input-emp-id");
-    let input_emp_name = document.getElementById("input-emp-name");
-    let input_hire_date = document.getElementById("input-hire-date");
+    let input_emp_id = document.getElementById("input-emp-id-update");
+    let input_emp_name = document.getElementById("input-emp-name-update");
+    let input_hire_date = document.getElementById("input-hire-date-update");
 
     // Get the values from the form fields
-    let input_emp_id_value = input_emp_name.value;
+    let input_emp_id_value = input_emp_id.value;
     let input_emp_name_value = input_emp_name.value;
     let input_hire_date_value = input_hire_date.value;
     
+    // console.log(input_emp_id.value + input_emp_name.value + input_hire_date.value);
     // currently the database table for bsg_people doesnot allow updating values to NULL
     // so we must abort if being bassed NULL for homeworld
     if (input_emp_id_value === undefined){
@@ -42,7 +43,8 @@ updatePersonForm.addEventListener("submit", function (e) {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
 
             // Add the new data to the table
-            updateRow(xhttp.response, input_emp_name_value);
+            console.log(xhttp.response)
+            updateRow(data, data.emp_id);
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
@@ -50,15 +52,16 @@ updatePersonForm.addEventListener("submit", function (e) {
         }
     }
 
+    //DEBUG
+    console.log(JSON.stringify(data))
+
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
-
+    
 })
 
 
 function updateRow(data, emp_id){
-    let parsedData = JSON.parse(data);
-    console.log({parsedData})
     
     let table = document.getElementById("employees-table");
 
@@ -75,8 +78,8 @@ function updateRow(data, emp_id){
             let td2 = updateRowIndex.getElementsByTagName("td")[2];
             console.log(td.value);
 
-            td1.innerHTML = parsedData[0].emp_name; 
-            td2.innerHTML = parsedData[0].emp_name; 
+            td1.innerHTML = data.emp_name; 
+            td2.innerHTML = data.emp_hire_date; 
        }
     }
 }

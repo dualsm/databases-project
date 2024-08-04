@@ -8,7 +8,7 @@
 // setting up port to use, express instance created
 var express = require('express');
 var app = express();
-let PORT = 44082
+let PORT = 44083
 
 // step 5 from github: 
 app.use(express.json())
@@ -57,7 +57,7 @@ app.get('/employees', (req,res) => {
     // maybe since i already got all data I need from this 'Employees' I don't need 2nd query
     db.pool.query(query1, function(error, rows, fields){
         // db.pool.query(query2, function(error, rows, fields){
-            console.log({data:rows});
+            // console.log({data:rows});
             res.render('employees', {data:rows});
         // })
      })
@@ -124,10 +124,10 @@ app.delete('/delete-employees-ajax/', function (req,res,next){
 
 app.put('/put-employee-ajax', function(req,res,next){
     let data = req.body;
-    console.log(data.emp_id)
+    console.log(data)
     let emp_id = parseInt(data.emp_id);
 
-    let queryUpdateEmployee = `UPDATE Employees SET emp_name = '${data.emp_name}', hire_date = '${data.hire_date}' WHERE emp_id = ${emp_id};`;
+    let queryUpdateEmployee = `UPDATE Employees SET emp_name = '${data.emp_name}', hire_date = '${data.emp_hire_date}' WHERE emp_id = ${emp_id};`;
     let queryRefillTable = "SELECT emp_id, emp_name, DATE_FORMAT(hire_date, '%m/%d/%Y') AS hire_date FROM Employees;";
   
           // Run the 1st query
@@ -144,13 +144,13 @@ app.put('/put-employee-ajax', function(req,res,next){
               else
               {
                   // Run the second query
-                  db.pool.query(queryRefillTable, function(error, rows, fields) {
+                  db.pool.query(queryRefillTable, [data.emp_name, data.hire_date, emp_id],function(error, rows, fields) {
   
                       if (error) {
                           console.log(error);
                           res.sendStatus(400);
                       } else {
-                          res.render('employees', rows);
+                          res.sendStatus(200);
                       }
                   })
               }

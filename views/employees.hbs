@@ -74,20 +74,20 @@
 <br />
 
 <h2>Updating An Employee's Name and/or Hiring Date </h2>
-<form id="update-employee-form-ajax" >
+<form id="update-employee-form-ajax" action="/employees" method="GET">
     <fieldset class="fields">
         <label for="input-emp-name">Employee name: </label>
-        <select id="input-emp-id" name="input-emp-id" required>
+        <select id="input-emp-id-update" name="input-emp-id" required>
             {{#each data}}
             <option value="{{this.emp_id}}">{{this.emp_name}}</option>
             {{/each}}
         </select>
         <br />
         <label> Employee New Name </label> 
-        <input type="text" id="input-emp-name" name="input-emp-name">
+        <input type="text" id="input-emp-name-update" name="input-emp-name">
         <br />
         <label for="input-date-hired">Hire date: </label>
-        <input type="date" id="input-hire-date" name="input-hire-date" required>
+        <input type="date" id="input-hire-date-update" name="input-hire-date" required>
         <br />
         <input type="submit" value="Modify">
     </fieldset>

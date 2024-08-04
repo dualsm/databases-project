@@ -9,15 +9,16 @@ updatePersonForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let input_emp_id = document.getElementById("input-emp-id");
-    let input_emp_name = document.getElementById("input-emp-name");
-    let input_hire_date = document.getElementById("input-hire-date");
+    let input_emp_id = document.getElementById("input-emp-id-update");
+    let input_emp_name = document.getElementById("input-emp-name-update");
+    let input_hire_date = document.getElementById("input-hire-date-update");
 
     // Get the values from the form fields
-    let input_emp_id_value = input_emp_name.value;
+    let input_emp_id_value = input_emp_id.value;
     let input_emp_name_value = input_emp_name.value;
     let input_hire_date_value = input_hire_date.value;
     
+    // console.log(input_emp_id.value + input_emp_name.value + input_hire_date.value);
     // currently the database table for bsg_people doesnot allow updating values to NULL
     // so we must abort if being bassed NULL for homeworld
     if (input_emp_id_value === undefined){
@@ -42,7 +43,8 @@ updatePersonForm.addEventListener("submit", function (e) {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
 
             // Add the new data to the table
-            updateRow(xhttp.response, input_emp_name_value);
+            console.log(xhttp.response)
+            updateRow(JSON.stringify(data), data.emp_id);
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
@@ -50,21 +52,23 @@ updatePersonForm.addEventListener("submit", function (e) {
         }
     }
 
+    //DEBUG
+    console.log(JSON.stringify(data))
+
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
-
+    
 })
 
 
 function updateRow(data, emp_id){
     let parsedData = JSON.parse(data);
-    console.log({parsedData})
-    
     let table = document.getElementById("employees-table");
 
     for (let i = 0, row; row = table.rows[i]; i++) {
        //iterate through rows
        //rows would be accessed using the "row" variable assigned in the for loop
+       console.log(table.rows[i].getAttribute("data-value"))
        if (table.rows[i].getAttribute("data-value") == emp_id) {
 
             // Get the location of the row where we found the matching person ID
@@ -76,7 +80,7 @@ function updateRow(data, emp_id){
             console.log(td.value);
 
             td1.innerHTML = parsedData[0].emp_name; 
-            td2.innerHTML = parsedData[0].emp_name; 
+            td2.innerHTML = parsedData[0].emp_hire_date; 
        }
     }
 }

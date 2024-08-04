@@ -2,27 +2,30 @@
 <h1> Jobs </h1>
 <!-- jobs table -->
 <table border="1" cellpadding="5">
-    <tr>
-        <th>id</th>
-        <th>Job Title</th>
-        <th>Department</th>
-    </tr>
+    <caption>
+        Jobs Table
+    </caption>
+    <thead>
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th>delete</th>
+        </tr>
+    </thead>
 
+    <tbody>
+    {{#each data}}
     <tr>
-        <td>1</td>
-        <td>General Manager</td>
-        <td>1</td>
+        <td>{{this.job_id}}</td>
+        <td>{{this.job_title}}</td>
+        <td>{{this.dep_id}}</td>
+        <td><button onclick="deleteJob({{this.emp_id}})">Delete</button></td>
     </tr>
-    <tr> 
-        <td>6</td>
-        <td>Head Chef</td>
-        <td>3</td>
-    </tr>
-    <tr> 
-        <td>3</td>
-        <td>Server</td>
-        <td>2</td>
-    </tr>
+    {{/each}}
+    </tbody>
 </table>
 
 

@@ -44,7 +44,7 @@ updatePersonForm.addEventListener("submit", function (e) {
 
             // Add the new data to the table
             console.log(xhttp.response)
-            updateRow(data, data.emp_id);
+            updateRow(JSON.stringify(data), data.emp_id);
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
@@ -62,12 +62,13 @@ updatePersonForm.addEventListener("submit", function (e) {
 
 
 function updateRow(data, emp_id){
-    
+    let parsedData = JSON.parse(data);
     let table = document.getElementById("employees-table");
 
     for (let i = 0, row; row = table.rows[i]; i++) {
        //iterate through rows
        //rows would be accessed using the "row" variable assigned in the for loop
+       console.log(table.rows[i].getAttribute("data-value"))
        if (table.rows[i].getAttribute("data-value") == emp_id) {
 
             // Get the location of the row where we found the matching person ID
@@ -78,8 +79,8 @@ function updateRow(data, emp_id){
             let td2 = updateRowIndex.getElementsByTagName("td")[2];
             console.log(td.value);
 
-            td1.innerHTML = data.emp_name; 
-            td2.innerHTML = data.emp_hire_date; 
+            td1.innerHTML = parsedData[0].emp_name; 
+            td2.innerHTML = parsedData[0].emp_hire_date; 
        }
     }
 }

@@ -8,7 +8,7 @@
 // setting up port to use, express instance created
 var express = require('express');
 var app = express();
-let PORT = 44083
+let PORT = 44082
 
 // step 5 from github: 
 app.use(express.json())
@@ -150,7 +150,7 @@ app.put('/put-employee-ajax', function(req,res,next){
                           console.log(error);
                           res.sendStatus(400);
                       } else {
-                          res.sendStatus(200);
+                          res.send(rows);
                       }
                   })
               }

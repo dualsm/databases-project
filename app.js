@@ -71,7 +71,6 @@ app.post('/add-employee-form', function(req,res){
     let data = req.body;
 
     // check for invalid data entry
-    // WILL RETURN TO SANITIZE
     let emp_name = parseInt(data['input_emp_name']);
     if (isNaN(emp_name))
     {
@@ -173,7 +172,6 @@ app.post('/add-department-form', function(req,res){
     let data = req.body;
 
     // check for invalid data entry
-    // WILL RETURN TO SANITIZE
     let dep_name = parseInt(data['input_dep_name']);
     if (isNaN(dep_name))
     {
@@ -213,7 +211,6 @@ app.post('/add-job-form', function(req,res){
     console.log(data)
 
     // check for invalid data entry
-    // WILL RETURN TO SANITIZE
     let job_name = parseInt(data['input_job_name']);
     let salary = parseInt(data['input_salary']);
     let bonus = parseInt(data['input_bonus']);
@@ -329,7 +326,6 @@ app.post('/add-assignment', function(req,res){
     console.log(data)
 
     // check for invalid data entry
-    // WILL RETURN TO SANITIZE
     let emp_id = parseInt(data['input-emp-id-assignment']);
     let job_id = parseInt(data['input-job-id-assignment']);
 

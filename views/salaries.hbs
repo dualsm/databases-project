@@ -1,6 +1,8 @@
 <!-- salaries.hbs -->
 <h1> Salaries </h1>
-
+<script>
+    
+</script>
 <!-- salaries table -->
 <table id="salaries-table" border="1" cellpadding="5">
        <caption> Salaries Table </caption>
@@ -18,8 +20,8 @@
         {{#each data}}
         <tr>
             <td>{{this.salary_id}}</td>
-            <td>{{this.job_id}}</td>
-            <td>{{this.job_title}}</td>
+            <td>{{checkNull this.job_id}}</td>
+            <td>{{checkNull this.job_title}}</td>
             <td>{{this.annual_pay}}</td>
             <td>{{this.bonus}}</td>
             
@@ -30,3 +32,33 @@
 
 <h2> Add a salary when you add a job to the database! <a href="/jobs">Add a job</a> </h2>
 
+<h2> Edit Salaries </h2>
+<form id="update-salary-form-ajax" action="/salaries" method="GET">
+    <fieldset class="fields">
+        <label> Salary ID </label> 
+        <select id="input-salary-id" name="input-salary-id" required>
+            {{#each data}}
+            <option value="{{this.salary_id}}">{{this.salary_id}}</option>
+            {{/each}}
+        </select>
+        <br />
+        <label> New Job ID </label> 
+        <select id="input-job-id" name="input-job-id" required>
+            {{#each data}}
+            <option value="{{this.job_id}}">{{this.job_id}}</option>
+            {{/each}}
+            <option value="NULL"> N/A </option>
+        </select>
+        <br />
+        <label> New Salary </label> 
+        <input type="text" id="input-salary" name="input-salary">
+        <br />
+        <label> New Bonus </label> 
+        <input type="text" id="input-bonus" name="input-bonus">
+        <br />
+        
+        <input class="btn" type="submit" value="Edit Salary">
+    </fieldset>
+    
+</form>
+<script src="./js/updateSalary.js"></script>

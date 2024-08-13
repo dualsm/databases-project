@@ -74,14 +74,13 @@ WHERE job_title = :currentJobTitleInput;
 
 -- Update employee-job relationship
 UPDATE Employees_to_Jobs
-SET job_id = (SELECT job_id FROM Jobs WHERE job_title = :newJobTitleInput)
-WHERE emp_id = (SELECT emp_id FROM Employees WHERE emp_name = :empNameInput)
-AND job_id = (SELECT job_id FROM Jobs WHERE job_title = :currentJobTitleInput);
+SET job_id = :newJobIDInput, emp_id = :empNameInput
+WHERE emp_to_job_id = (:currentEmpToJobInput);
 
 -- Update salary details
 UPDATE Salaries
-SET annual_pay = :newAnnualPayInput, bonus = :newBonusInput
-WHERE job_id = (SELECT job_id FROM Jobs WHERE job_title = :jobTitleInput);
+SET job_id = :newJobId, annual_pay = :newAnnualPayInput, bonus = :newBonusInput
+WHERE salary_id = :currentSalaryId;
 
 -- DELETE statements ==================================================
 -- Delete a department by name

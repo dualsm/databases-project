@@ -16,5 +16,8 @@
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "handlebars": "^4.7.8"
+  }
 }

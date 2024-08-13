@@ -1,13 +1,11 @@
 <!-- employeestojobs.hbs -->
 <h1> Assigning Jobs </h1>
-
-<!-- employees_to_jobs table -->
 <form action="/employeestojobs" method="GET">
 <p> The page must be refreshed upon deleting/updating data: 
 <input class="btn" type="submit" id="refresh" value="Refresh Table">
 </p>
 </form>
-<!-- departments table -->
+<!-- employees_to_jobs table -->
 <table id="employeestojobsTable">
     <caption>Employee Assignment Table</caption>
     <thead>
@@ -24,76 +22,70 @@
         {{#each data}}
         <tr>
             <td>{{this.emp_to_job_id}}</td>
-            <td>{{this.emp_name}}</td>
-            <td>{{this.job_title}}</td>
             <td>{{this.emp_id}}</td>
+            <td>{{this.emp_name}}</td>
             <td>{{this.job_id}}</td>
-            <td><button onclick="deleteAssignment({{this.id}})">Delete</button></td>
+            <td>{{this.job_title}}</td>
+            <td><button onclick="deleteAssignment({{this.emp_to_job_id}})">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
 </table>
-
+<script src="./js/deleteAssignment.js"></script>
 
 <h2> Assign a Job </h2>
 <form action="/add-assignment" method="POST">
-    <fieldset class="fields" style="width:50%">
-        <label> Employee ID</label> 
-        <select id="employeeIdInput" name="employeeIdInput" required>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="10">10</option>
+    <fieldset class="fields">
+        <label> Employee ID </label> 
+        <select id="input-emp-id-assignment" name="input-emp-id-assignment" required>
+            {{#each data}}
+            <option value="{{this.emp_id}}">{{this.emp_id}}</option>
+            {{/each}}
         </select>
         <br />
-        <label> Job ID</label> 
-        <select id="jobIdInput" name="jobIdInput" required>
-            <option value="1">2</option>
-            <option value="2">3</option>
-            <option value="10">4</option>
+        <label> Job ID </label> 
+        <select id="input-job-id-assignment" name="input-job-id-assignment" required>
+            {{#each data}}
+            <option value="{{this.job_id}}">{{this.job_id}}</option>
+            {{/each}}
         </select>
         <br />
+        <input class="btn" type="submit" id="addAssignment" value="Add Assignment">
     </fieldset>
-    <input class="btn" type="submit" id="addAssignment" value="Add Assignment">
-    <input class="btn" type="button" value="Cancel">
 </form> 
 
-<h2> Remove Assignments </h2>
-<form action="/removeRelation" method="POST">
-    <fieldset class="fields" style="width:50%">
-        <label> ID Selection </label> 
-        <select id="emp_to_job_idInput" name="emp_to_job_idInput" required>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="10">10</option>
-        </select>
-    </fieldset>
-    <input class="btn" type="submit" value="Remove Assignment">
-</form>
-
 <h2> Edit Assignments </h2>
-<form action="/editrelation" method="POST">
-    <fieldset class="fields" style="width:50%">
-        <label> ID Selection </label> 
-        <select id="emp_to_job_idInput" name="emp_to_job_idInput" required>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="10">10</option>
+<form id="update-assignment-form-ajax" action="/employeestojobs" method="GET">
+    <fieldset class="fields">
+        <label> Emp_to_Job ID </label> 
+        <select id="input-emp-to-job-id-edit" name="input-emp-to-job-id-edit" required>
+            {{#each data}}
+            <option value="{{this.emp_to_job_id}}">{{this.emp_to_job_id}}</option>
+            {{/each}}
         </select>
         <br />
-        <br />
-        <label> Employee ID</label> 
-        <select id="employeeIdInput" name="employeeIdInput" required>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="10">10</option>
+        <label> Employee ID </label> 
+        <select id="input-emp-id-edit" name="input-emp-id-edit" required>
+            {{#each data}}
+            <option value="{{this.emp_id}}">{{this.emp_id}}</option>
+            {{/each}}
         </select>
         <br />
-        <label> Job ID</label> 
-        <select id="jobIdInput" name="jobIdInput" required>
-            <option value="1">2</option>
-            <option value="2">3</option>
-            <option value="10">4</option>
+        <label> Job ID </label> 
+        <select id="input-job-id-edit" name="input-job-id-edit" required>
+            {{#each data}}
+            <option value="{{this.job_id}}">{{this.job_id}}</option>
+            {{/each}}
         </select>
+        <br />
+        <input class="btn" type="submit" value="Edit Assignment">
     </fieldset>
-    <input class="btn" type="submit" value="Edit Assignment">
+    
+</form>
+<script src="./js/updateAssignment.js"></script>
+<br />
+<form action="/employeestojobs" method="GET">
+<p> The page must be refreshed upon deleting/updating data: 
+<input class="btn" type="submit" id="refresh" value="Refresh Table">
+</p>
 </form>

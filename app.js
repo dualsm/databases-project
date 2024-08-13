@@ -28,6 +28,12 @@ app.engine('.hbs', engine({extname: ".hbs"})); // create engine to recognize .hb
 app.set('view engine', '.hbs'); // use handlebars engine when encounters the .hbs extension
 
 
+// Stack overflow reference for non-empty null returns: https://stackoverflow.com/questions/39766555/how-to-check-for-empty-string-null-or-white-spaces-in-handlebar 
+const Handlebars = require('handlebars');
+Handlebars.registerHelper('checkNull', function(value) {
+    return value === null ? 'N/A' : value;
+});
+
 // add each css file name to css_arr if you want the css loaded
 var css_arr = ['main', 'employees','departments', 'jobs', 'salaries']
 app.use((req, res, next) => {
@@ -247,13 +253,56 @@ app.post('/add-job-form', function(req,res){
 // SALARIES
 
 app.get('/salaries', (req,res) => {
-    let query1 = `SELECT salary_id, Salaries.job_id, job_title, annual_pay, bonus FROM Salaries JOIN Jobs WHERE Salaries.job_id = Jobs.job_id;`;
+    let query1 = `SELECT salary_id, Salaries.job_id, job_title, annual_pay, bonus FROM Salaries LEFT JOIN Jobs ON Salaries.job_id = Jobs.job_id;`;
 
     db.pool.query(query1, function(error, rows, fields){
         console.log({data:rows});
         res.render('salaries', {data:rows});
     }); 
 });
+
+app.put('/put-salary-ajax', function(req,res,next){
+    let data = req.body;
+    console.log(data)
+
+    let disableFKCheck = `SET FOREIGN_KEY_CHECKS = 0;`
+    let enableFKCheck = `SET FOREIGN_KEY_CHECKS = 1;`
+    let queryUpdateSalaries = `UPDATE Salaries SET job_id = ${data.job_id}, annual_pay = ${data.salary}, bonus = ${data.bonus} WHERE salary_id = ${data.salary_id};`;
+  
+    db.pool.query(disableFKCheck, function(error, rows, fields)
+    {
+        if (error) 
+        {
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else
+        {
+            db.pool.query(queryUpdateSalaries, function(error, rows, fields)
+            {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else{
+                    db.pool.query(enableFKCheck, function(error, rows, fields)
+                    {
+                        if (error) 
+                        {
+                            console.log(error);
+                            res.sendStatus(400);
+                        }
+                        else
+                        {
+                            res.send(rows);
+                        }    
+                    })
+                }
+            })
+        }
+    });
+});
+    
 
 // EMPLOYEESTOJOBS
 
@@ -265,7 +314,8 @@ app.get('/employeestojobs', (req,res) => {
        j.job_title
     FROM Employees_to_Jobs ej
     JOIN Employees e ON ej.emp_id = e.emp_id
-    JOIN Jobs j ON ej.job_id = j.job_id; `;
+    JOIN Jobs j ON ej.job_id = j.job_id
+    ORDER BY ej.emp_to_job_id ASC ; `;
 
     db.pool.query(query1, function(error, rows, fields){
         console.log({data:rows});
@@ -273,6 +323,67 @@ app.get('/employeestojobs', (req,res) => {
     }); 
 });
 
+app.post('/add-assignment', function(req,res){
+    let data = req.body;
+    console.log(data)
+
+    // check for invalid data entry
+    // WILL RETURN TO SANITIZE
+    let emp_id = parseInt(data['input-emp-id-assignment']);
+    let job_id = parseInt(data['input-job-id-assignment']);
+
+
+    // calendar selector already places in YYYY-MM-DD format
+    let query1 = `INSERT INTO Employees_to_Jobs (emp_id, job_id) VALUES ('${emp_id}', ${job_id});`
+    db.pool.query(query1, function(error, rows, fields){
+
+        if (error) {
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else{
+            res.redirect('/employeestojobs');
+        }
+    })
+});
+
+app.delete('/delete-assignment-ajax/', function (req,res,next){
+    let data = req.body;
+    let emp_to_job_id = parseInt(data.emp_to_job_id);
+    let deleteEmployee = `DELETE FROM Employees_to_Jobs WHERE emp_to_job_id = ${emp_to_job_id}`;
+
+    db.pool.query(deleteEmployee, [emp_to_job_id], function(error, rows, fields){
+        if(error){
+            console.log(error); // log error for troubleshooting
+            res.sendStatus(400);
+        }
+        else {
+            res.sendStatus(204);
+        }
+            
+        
+    })
+});
+
+app.put('/put-assignment-ajax', function(req,res,next){
+    let data = req.body;
+    console.log(data)
+
+    
+
+    let queryUpdateSalaries = `UPDATE Employees_to_Jobs SET job_id = ${data.job_id}, emp_id = ${data.emp_id} WHERE emp_to_job_id = ${data.ej_id};`;
+  
+        db.pool.query(queryUpdateSalaries, function(error, rows, fields){
+            if (error) {
+                console.log(error);
+                res.sendStatus(400);
+            }
+            else
+            {
+                res.send(rows);
+            }
+        });
+});
 // listener for debugging
 app.listen(PORT, () => {            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
     console.log('Express started on http://classwork.engr.oregonstate.edu:' + PORT + '/ ; press Ctrl-C to terminate.')

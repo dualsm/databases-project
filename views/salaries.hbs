@@ -11,7 +11,6 @@
                 {{@key}}
             </th>
             {{/each}}
-            <th>delete</th>
         </tr>
     </thead>
 
@@ -20,60 +19,14 @@
         <tr>
             <td>{{this.salary_id}}</td>
             <td>{{this.job_id}}</td>
+            <td>{{this.job_title}}</td>
             <td>{{this.annual_pay}}</td>
             <td>{{this.bonus}}</td>
-            <td><button onclick="deleteSalary({{this.emp_id}})">Delete</button></td>
+            
         </tr>
         {{/each}}
     </tbody>
 </table>
 
-<h2> Add a salary </h2>
-<form action="/addSalary" method="POST">
-    <fieldset class="fields" style="width:50%">
-        <label> Annual Pay </label> 
-        <input type="text" name="annual_pay" required>
-        <br />
-        <label> Bonus </label>
-        <input type="text" name="bonus" required>
-        <br />
-        <label> Job ID </label>
-        <select id="jobIdInput" name="jobIdInput" required>
-            <option value="2">2</option>
-        </select>
-    </fieldset>
-    <input class="btn" type="submit" id="addSalary" value="Add Salary">
-    <input class="btn" type="button" value="Cancel">
-</form> 
+<h2> Add a salary when you add a job to the database! <a href="/jobs">Add a job</a> </h2>
 
-<h2> Remove a Salary </h2>
-<form action="/removeSalary" method="POST">
-    <fieldset class="fields" style="width:50%">
-        <label> Job Title </label> 
-        <select id="jobTitleInput" name="jobTitleInput" required>
-            <option value="General Manager">General Manager</option>
-            <option value="Head Chef">Head Chef</option>
-            <option value="Server">Server</option>
-        </select>
-    </fieldset>
-    <input class="btn" type="submit" value="Remove Salary">
-</form>
-
-<h2> Edit a Salary </h2>
-<form action="/editSalary" method="POST">
-    <fieldset class="fields" style="width:50%">
-        <label> Job Title </label> 
-        <select id="jobTitleInput" name="jobTitleInput" required>
-            <option value="1">General Manager</option>
-            <option value="6">Head Chef</option>
-            <option value="3">Server</option>
-        </select>
-        <br />
-        <label> New Annual Pay</label> 
-        <input type="text" name="annual_pay" required>
-        <br />
-        <label> New Bonus</label> 
-        <input type="text" name="bonus" required>
-    </fieldset>
-    <input class="btn" type="submit" value="Edit Salary">
-</form>

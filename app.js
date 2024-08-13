@@ -198,7 +198,7 @@ app.post('/add-department-form', function(req,res){
 });
 
 app.get('/jobs', (req,res) => {
-    let query1 = `SELECT job_id, job_title, dep_id FROM Jobs;`;
+    let query1 = `SELECT job_id, job_title, Jobs.dep_id, dep_name FROM Jobs JOIN Departments WHERE Jobs.dep_id = Departments.dep_id;`;
 
     db.pool.query(query1, function(error, rows, fields){
         console.log({data:rows});
@@ -206,8 +206,50 @@ app.get('/jobs', (req,res) => {
     }); 
 });
 
+app.post('/add-job-form', function(req,res){
+    let data = req.body;
+    console.log(data)
+
+    // check for invalid data entry
+    // WILL RETURN TO SANITIZE
+    let job_name = parseInt(data['input_job_name']);
+    let salary = parseInt(data['input_salary']);
+    let bonus = parseInt(data['input_bonus']);
+    if (isNaN(job_name))
+    {
+        job_name = 'NULL'
+    }
+
+
+    // calendar selector already places in YYYY-MM-DD format
+    let query1 = `INSERT INTO Jobs (job_title, dep_id) VALUES ('${data['input_job_name']}', ${data['input_dep_id']});`
+    let query2 = `INSERT INTO Salaries (job_id, annual_pay, bonus) VALUES ((SELECT job_id FROM Jobs WHERE job_title = '${data['input_job_name']}'), ${salary}, ${bonus});`
+    db.pool.query(query1, function(error, rows, fields){
+
+        if (error) {
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else{
+            db.pool.query(query2, function(error, rows, fields){
+
+            
+                if (error) {
+                    console.log(error)
+                    res.sendStatus(400);
+                }
+                else
+                {
+                    res.redirect('/jobs');
+                }
+            })
+        }
+    })
+
+});
+
 app.get('/salaries', (req,res) => {
-    let query1 = `SELECT salary_id, job_id, annual_pay, bonus FROM Salaries;`;
+    let query1 = `SELECT salary_id, Salaries.job_id, job_title, annual_pay, bonus FROM Salaries JOIN Jobs WHERE Salaries.job_id = Jobs.job_id;`;
 
     db.pool.query(query1, function(error, rows, fields){
         console.log({data:rows});
@@ -216,7 +258,13 @@ app.get('/salaries', (req,res) => {
 });
 
 app.get('/employeestojobs', (req,res) => {
-    res.render('employeestojobs'); 
+    let query1 = ` SELECT emp_to_job_id, Employees.emp_name, Jobs.job_title, ej.emp_id, ej.job_id FROM Employees_to_Jobs ej JOIN Jobs ON ej.job_id = Jobs.job_id JOIN Employees ON ej.emp_id = Employees.emp_id;`;
+
+    db.pool.query(query1, function(error, rows, fields){
+        console.log({data:rows});
+        res.render('employeestojobs', {data:rows}); 
+    }); 
+    
 });
 
 // listener for debugging

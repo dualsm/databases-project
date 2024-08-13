@@ -18,9 +18,7 @@ updatePersonForm.addEventListener("submit", function (e) {
     let input_emp_name_value = input_emp_name.value;
     let input_hire_date_value = input_hire_date.value;
     
-    // console.log(input_emp_id.value + input_emp_name.value + input_hire_date.value);
-    // currently the database table for bsg_people doesnot allow updating values to NULL
-    // so we must abort if being bassed NULL for homeworld
+
     if (input_emp_id_value === undefined){
         input_emp_name_value = "ERRORERRORERROR";
     }

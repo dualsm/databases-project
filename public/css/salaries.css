@@ -1,23 +1,28 @@
 table {
     border-collapse: collapse;
-    border: 1px solid rgb(206, 57, 57);
+    border: 1px solid rgb(0, 0, 0);
     table-layout: fixed;
     width: 60%;
 }
 
 th{
-    width: 15%;
-    text-align: center;
+    width: 13%;
 }
-th+th {
-    width: 30%;
+ th+th {
+    width: 12%;
 }
+
 th+th+th {
     width: 30%;
 }
+
 th+th+th+th {
-    width: 10%;
+    width: 15%;
 }
+
 th+th+th+th+th {
     width: 15%;
+}
+th+th+th+th+th+th {
+    width: 10%;
 }

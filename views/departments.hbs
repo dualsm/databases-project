@@ -1,6 +1,10 @@
 <!-- departments.hbs -->
 <h1> Departments </h1>
-
+<form action="/departments" method="GET">
+<p> The page must be refreshed upon deleting/updating data: 
+<input class="btn" type="submit" id="refresh" value="Refresh Table">
+</p>
+</form>
 <!-- departments table -->
 <table id="departmentsTable">
     <caption>Departments Table</caption>
@@ -36,21 +40,3 @@
         <input class="btn" type="submit" id="addDepartment" value="Add Department">
     </fieldset>
 </form> 
-
-<h2> Edit Department </h2>
-<form action="/editDepartment" method="POST">
-    <fieldset class="fields" style="width:50%">
-        <label> Department Selection </label> 
-         <select id="departmentInput" name="departmentInput" required>
-            <option value="1">1 - Management</option>
-            <option value="2">2 - Front-of-house</option>
-            <option value="3">3 - Back-of-house</option>
-        </select>
-        <br />
-        <br />
-        <label> New Department Name</label> 
-        <input type="text" name="dep_name" required>
-        
-        <input class="btn" type="submit" value="Edit Department">
-    </fieldset>
-</form>

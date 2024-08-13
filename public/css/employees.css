@@ -1,13 +1,12 @@
 table {
     border-collapse: collapse;
-    border: 1px solid black;
-    table-layout: fixed;
+    border: 1px solid rgb(0, 0, 0);
+    table-layout: auto;
     width: 60%;
 }
 
 th{
     width: 6%;
-    text-align: center;
 }
 th+th {
     width: 40%;
@@ -16,8 +15,5 @@ th+th+th {
     width: 30%;
 }
 th+th+th+th {
-    width: 12%;
-}
-th+th+th+th+th {
-    width: 12%;
+    width: 24%;
 }

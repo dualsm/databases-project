@@ -2,40 +2,41 @@
 <h1> Assigning Jobs </h1>
 
 <!-- employees_to_jobs table -->
-<table border="1" cellpadding="5">
+<form action="/employeestojobs" method="GET">
+<p> The page must be refreshed upon deleting/updating data: 
+<input class="btn" type="submit" id="refresh" value="Refresh Table">
+</p>
+</form>
+<!-- departments table -->
+<table id="employeestojobsTable">
+    <caption>Employee Assignment Table</caption>
+    <thead>
     <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Job Title</th>
-        <th>Employee ID</th>
-        <th>Job ID</th>
+        {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+        {{/each}}
+        <th>Delete</th>
     </tr>
-    <tr>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-    </tr>
-    <tr> 
-        <td>Jack Garcia</td>
-        <td>Alice Johnson</td>
-        <td>Carol White</td>
-    </tr>
-
-    <tr> 
-        <td>2</td>
-        <td>2</td>
-        <td>2</td>
-    </tr>
-    <tr> 
-        <td>10</td>
-        <td>10</td>
-        <td>6</td>
-    </tr>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr>
+            <td>{{this.emp_to_job_id}}</td>
+            <td>{{this.emp_name}}</td>
+            <td>{{this.job_title}}</td>
+            <td>{{this.emp_id}}</td>
+            <td>{{this.job_id}}</td>
+            <td><button onclick="deleteAssignment({{this.id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
 </table>
 
 
 <h2> Assign a Job </h2>
-<form action="/addRelation" method="POST">
+<form action="/add-assignment" method="POST">
     <fieldset class="fields" style="width:50%">
         <label> Employee ID</label> 
         <select id="employeeIdInput" name="employeeIdInput" required>

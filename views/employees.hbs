@@ -1,6 +1,10 @@
 <!-- employees.hbs -->
 <h1> Employees </h1>
-<p>Note: Delete button works, but you must refresh the page to view the updated table.</p>
+<form action="/employees" method="GET">
+<p> The page must be refreshed upon deleting/updating data: 
+<input class="btn" type="submit" id="refresh" value="Refresh Table">
+</p>
+</form>
 {{!-- create the table --}}
 <table id="employees-table" >
     <caption> Employees Table </caption>
@@ -28,17 +32,6 @@
 </table>
 <script src="./js/deleteEmployee.js"></script>
 
-<!-- UNDER CONSTRUCTION -->
-{{!-- <h2>Search For Employee</h2>
-<form id="search-person-html" method='GET' action='/employees'>
-    <label for="input-name">Search by name: </label>
-    <input type="text" name="name" id="input-name-html-search">
-    
-    <input type="submit">
-    <a href='/employees'><button>Reset</button></a>
-</form> --}}
-
-
 <h2> Add an Employee </h2>
 <p>To add a new employee, fill out the fields and click "Submit"</p>
 <form id="add-employee-form" action="/add-employee-form" method="POST">
@@ -51,23 +44,6 @@
         <input type="date" id="input_hire_date" name="input_hire_date" required>
         <br />
         <input class="btn" type="submit" id="addEmployee" value="Add Employee">
-    </fieldset>
-</form>
-
-
-<h2> Remove Employee</h2>
-<form id="remove-employee-form" action="/remove-employee-form" method="POST">
-    <fieldset class="fields">
-        <label> Select Employee </label> 
-        <select id="input-emp-id" name="input-emp-id" required>
-            {{#each data}}
-            <option value="{{this.emp_id}}">{{this.emp_name}}</option>
-            {{/each}}
-        </select>
-        <input class="btn" type="submit" value="Remove Employee">
-        <br />
-        <strong>Warning, this <u>will</u> delete the user from the database!!</strong>
-        <p> Note: it doesn't actually work yet. Though the buttons on the table work! </p>
     </fieldset>
 </form>
 
@@ -93,46 +69,8 @@
     </fieldset>
 </form>
 <script src="./js/updateEmployee.js"></script>
-
-
-<!-- OLD -->
-{{!-- 
-
-<h2> Remove an Employee</h2>
-<form action="/removeEmployee" method="POST">
-    <fieldset class="fields" style="width:50%">
-        <label> Employee Name </label> 
-        <select id="jobIdSelection" name="jobIdSelection" required>
-            <option value="10">Jack Garcia</option>
-            <option value="1">Alice Johnson</option>
-            <option value="3">Carol White</option>
-        </select>
-    </fieldset>
-    <input class="btn" type="submit" value="Remove Employee">
-</form>
-
-<h2> Edit </h2>
-<form action="/editEmployee" method="POST">
-    <fieldset class="fields" style="width:50%">
-        <label> Employee ID </label> 
-        <select id="jobIdSelection" name="jobIdSelection" required>
-            <option value="10">10</option>
-            <option value="1">1</option>
-            <option value="3">3</option>
-        </select>
-        <br />
-        <label> Employee Name </label> 
-        <input type="text" name="emp_name" required>
-        <br />
-        <label> Department ID </label>
-        <select id="depNameInput" name="depNameInput" required>
-            <option value="1">1 - Management</option>
-            <option value="2">2 - Back-of-house</option>
-            <option value="3">3 - Front-of-house</option>
-        </select>
-        <br />
-        <label> Hire Date </label> 
-        <input type="date" name="hire_date" required>
-    </fieldset>
-    <input class="btn" type="submit" value="Edit Salary">
-</form> --}}
+<br />
+<form action="/employees" method="GET">
+<p> The page must be refreshed upon deleting/updating data: 
+<input class="btn" type="submit" id="refresh" value="Refresh Table">
+</p>

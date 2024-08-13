@@ -9,7 +9,8 @@ SELECT dep_name, dep_id from Departments;
 
 -- Select all employees
 SELECT * FROM Employees;
-
+SELECT emp_id, emp_name, DATE_FORMAT(hire_date, '%m/%d/%Y') AS hire_date FROM Employees;
+SELECT emp_id, emp_name, DATE_FORMAT(hire_date, '%m/%d/%Y') AS hire_date FROM Employees WHERE emp_name LIKE "${req.query.name}%;"
 -- Get all job IDs and job titles for a specific employee by their name
 SELECT ej.job_id, j.job_title
 FROM Employees e

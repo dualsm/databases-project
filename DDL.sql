@@ -42,7 +42,7 @@ CREATE TABLE Employees_to_Jobs(
 
 CREATE TABLE Salaries(
     salary_id int AUTO_INCREMENT NOT NULL UNIQUE,
-    job_id int NOT NULL,
+    job_id int,
     annual_pay int NOT NULL,
     bonus int,
     PRIMARY KEY (salary_id),

@@ -1,14 +1,14 @@
-// URL: https://canvas.oregonstate.edu/courses/1967354/assignments/9690199?module_item_id=24460781
-// Date Retrieved: 6/26/2024
-// Title: Connect webapp to database (Individual)
-// Type: Tutorial Code
-// Author: Canvas Module
+// URL: https://github.com/osu-cs340-ecampus
+// Date Retrieved: 7/31/2024
+// Title: CS340 Node-js Starter App
+// Type: Tutorial Github Repo
+// Authors: gkochera, cortona1, currym-osu, dmgs11
 
 // Setup
 // setting up port to use, express instance created
 var express = require('express');
 var app = express();
-let PORT = 44082
+let PORT = 44086;
 
 // step 5 from github: 
 app.use(express.json())

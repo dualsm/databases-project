@@ -265,6 +265,7 @@ app.put('/put-salary-ajax', function(req,res,next){
     let data = req.body;
     console.log(data)
 
+    
     let disableFKCheck = `SET FOREIGN_KEY_CHECKS = 0;`
     let enableFKCheck = `SET FOREIGN_KEY_CHECKS = 1;`
     let queryUpdateSalaries = `UPDATE Salaries SET job_id = ${data.job_id}, annual_pay = ${data.salary}, bonus = ${data.bonus} WHERE salary_id = ${data.salary_id};`;

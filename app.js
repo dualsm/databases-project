@@ -54,12 +54,9 @@ app.get('/employees', (req,res) => {
     }
     
     // let query2 = "SELECT * FROM Employees;";
-    // maybe since i already got all data I need from this 'Employees' I don't need 2nd query
     db.pool.query(query1, function(error, rows, fields){
-        // db.pool.query(query2, function(error, rows, fields){
-            // console.log({data:rows});
-            res.render('employees', {data:rows});
-        // })
+        res.render('employees', {data:rows});
+
      })
     
 });
@@ -134,13 +131,10 @@ app.put('/put-employee-ajax', function(req,res,next){
           db.pool.query(queryUpdateEmployee, [data.emp_name, data.hire_date, emp_id], function(error, rows, fields){
               if (error) {
   
-              // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
                 console.log(error);
                 res.sendStatus(400);
               }
   
-              // If there was no error, we run our second query and return that data so we can use it to update the people's
-              // table on the front-end
               else
               {
                   // Run the second query
@@ -197,6 +191,8 @@ app.post('/add-department-form', function(req,res){
     })
 });
 
+// JOBS
+
 app.get('/jobs', (req,res) => {
     let query1 = `SELECT job_id, job_title, Jobs.dep_id, dep_name FROM Jobs JOIN Departments WHERE Jobs.dep_id = Departments.dep_id;`;
 
@@ -248,6 +244,8 @@ app.post('/add-job-form', function(req,res){
 
 });
 
+// SALARIES
+
 app.get('/salaries', (req,res) => {
     let query1 = `SELECT salary_id, Salaries.job_id, job_title, annual_pay, bonus FROM Salaries JOIN Jobs WHERE Salaries.job_id = Jobs.job_id;`;
 
@@ -256,6 +254,8 @@ app.get('/salaries', (req,res) => {
         res.render('salaries', {data:rows});
     }); 
 });
+
+// EMPLOYEESTOJOBS
 
 app.get('/employeestojobs', (req,res) => {
     let query1 = ` SELECT emp_to_job_id, Employees.emp_name, Jobs.job_title, ej.emp_id, ej.job_id FROM Employees_to_Jobs ej JOIN Jobs ON ej.job_id = Jobs.job_id JOIN Employees ON ej.emp_id = Employees.emp_id;`;
